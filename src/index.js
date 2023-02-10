@@ -1,4 +1,6 @@
 const express = require("express")
+const employeeRouter = require("./controllers/employees/employeeRoutes")
+const rosterRouter = require("./controllers/rosters/rosterRoutes")
 
 const app = express()
 
@@ -10,17 +12,9 @@ app.get("/", (request, response) => {
     })
 })
 
-app.get("/hello", (request, response) => {
-    response.json({
-        data: "Hello all"
-    })
-})
-
-app.get("/hello2", (request, response) => {
-    response.json({
-        data: "Hello to all"
-    })
-})
+app.use(express.json())
+app.use("/employees", employeeRouter)
+app.use("/rosters", rosterRouter)
 
 app.listen(PORT, () => {
     console.log("Server started")
