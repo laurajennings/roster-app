@@ -1,6 +1,8 @@
 const express = require("express")
-const employeeRouter = require("./controllers/employees/employeeRoutes")
-const rosterRouter = require("./controllers/rosters/rosterRoutes")
+const mongoose = require("mongoose")
+const employeeRouter = require("./controllers/employees/employeeRoutes.js")
+const rosterRouter = require("./controllers/rosters/rosterRoutes.js")
+const shiftRouter = require("./controllers/shifts/shiftRoutes")
 
 const app = express()
 
@@ -15,7 +17,12 @@ app.get("/", (request, response) => {
 app.use(express.json())
 app.use("/employees", employeeRouter)
 app.use("/rosters", rosterRouter)
+app.use("/shifts", shiftRouter)
 
 app.listen(PORT, () => {
     console.log("Server started")
+    mongoose.set("strictQuery", false)
+    mongoose.connect("mongodb://127.0.0.1:27017/rostr", () => {
+        console.log("DB Connected")
+    })
 })
