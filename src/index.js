@@ -22,7 +22,7 @@ app.use("/shifts", shiftRouter)
 app.listen(PORT, () => {
     console.log("Server started")
     mongoose.set("strictQuery", false)
-    mongoose.connect("mongodb://127.0.0.1:27017/rostr", () => {
+    mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.2", () => {
         console.log("DB Connected")
     })
 })

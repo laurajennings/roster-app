@@ -1,3 +1,5 @@
+const Shift = require("../../models/shift")
+
 const shifts = [
     {
         start: "2023-02-13T11:00:00",
@@ -13,20 +15,22 @@ const shifts = [
     }
 ]
 
-function getShifts() {
+async function getShifts() {
+    const shifts = await Shift.find()
     return shifts
 }
 
-function getShiftById(shiftId) {
-    const shift = shifts[shiftId]
+async function getShiftById(shiftId) {
+    try {
+    const shift = await Shift.findById(shiftId)
     return shift
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-function createShift(shift) {
-    const newShift = {
-        id: 4,
-        ...shift,
-    }
+async function createShift(shift) {
+    const newShift =  await Shift.create(shift)
     return newShift
 }
 

@@ -4,13 +4,13 @@ const {getShifts, getShiftById, createShift} = require("./shiftControllers")
 
 
 
-shiftRouter.get("/", (request, response) => {
-    const shifts = getShifts()
+shiftRouter.get("/", async (request, response) => {
+    const shifts = await getShifts()
     response.json(shifts)
 })
 
-shiftRouter.get("/:shiftId", (request, response) => {
-    const shift = getShiftById(request.params.shiftId)
+shiftRouter.get("/:shiftId", async (request, response) => {
+    const shift = await getShiftById(request.params.shiftId)
     if(!shift) {
         response.json({
         data: "Shift doesn't exist"
@@ -19,8 +19,8 @@ shiftRouter.get("/:shiftId", (request, response) => {
     response.json(shift)
 })
 
-shiftRouter.post("/", (request, response) => {
-    const shift = createShift({
+shiftRouter.post("/", async (request, response) => {
+    const shift = await createShift({
         start: request.body.start,
         end: request.body.end,
     })
