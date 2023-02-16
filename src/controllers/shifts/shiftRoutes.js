@@ -1,6 +1,6 @@
 const express = require("express")
 const shiftRouter = express.Router()
-const {getShifts, getShiftById, createShift} = require("./shiftControllers")
+const {getShifts, getShiftById, createShift, deleteShift} = require("./shiftControllers")
 
 
 
@@ -24,6 +24,11 @@ shiftRouter.post("/", async (request, response) => {
         start: request.body.start,
         end: request.body.end,
     })
+    response.json(shift)
+})
+
+shiftRouter.delete("/:shiftId", async (request, response) => {
+    const shift = await deleteShift(request.params.shiftId)
     response.json(shift)
 })
 
