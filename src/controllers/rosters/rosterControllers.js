@@ -1,3 +1,5 @@
+const Roster = require("../../models/roster")
+
 const rosters = [
     {
         date: "24.12.23",
@@ -27,16 +29,27 @@ const rosters = [
     }
 ]
 
-function getRosters() {
+async function getRosters() {
+    const rosters = await Roster.find()
     return rosters
 }
 
-function getRosterById(rosterId) {
-    const roster = rosters[rosterId]
+async function getRosterById(rosterId) {
+    const roster = await Roster.findById(rosterId)
     return roster
 }
 
+/*
+async function getRosgetRosterByUserIdWithShiftInfoterById(userId) {
+    const getRosterByUserIdWithShiftInfo = await Roster.findOne({
+        user_id: userId
+    }).populate("products.product")
+    return getRosterByUserIdWithShiftInfo
+}
+*/ 
+
 module.exports = {
     getRosters,
-    getRosterById
+    getRosterById,
+    //getRosterByUserIdWithShiftInfo
 }
