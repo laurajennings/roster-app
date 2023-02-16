@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const employeeRouter = require("./controllers/employees/employeeRoutes.js")
 const rosterRouter = require("./controllers/rosters/rosterRoutes.js")
 const shiftRouter = require("./controllers/shifts/shiftRoutes")
+const userRouter = require("./controllers/users/userRoutes")
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use("/employees", employeeRouter)
 app.use("/rosters", rosterRouter)
 app.use("/shifts", shiftRouter)
+app.use("/users", userRouter)
 
 app.listen(PORT, () => {
     console.log("Server started")
