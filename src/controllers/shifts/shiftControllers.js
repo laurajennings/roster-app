@@ -1,20 +1,5 @@
 const Shift = require("../../models/shift")
 
-const shifts = [
-    {
-        start: "2023-02-13T11:00:00",
-        end: "2023-02-13T16:00:00",
-    },
-    {
-        start: "2023-02-13T05:30:00",
-        end: "2023-02-13T11:01:00",
-    },
-    {
-        start: "2023-02-13T09:00:00",
-        end: "2023-02-13T15:30:00",
-    }
-]
-
 async function getShifts() {
     const shifts = await Shift.find()
     return shifts
@@ -34,8 +19,23 @@ async function createShift(shift) {
     return newShift
 }
 
+async function updateShift(shiftId, start, end) {
+    const updatedShift = await Shift.findByIdAndUpdate(shiftId,
+        {start, end},
+        {new: true}
+      )
+    return updatedShift
+}
+
+async function deleteShift(shiftId) {
+    const deletedShift = await Shift.findByIdAndDelete(shiftId)
+    return deletedShift
+}
+
 module.exports = {
     getShifts,
     getShiftById,
-    createShift
+    createShift,
+    updateShift,
+    deleteShift,
 }

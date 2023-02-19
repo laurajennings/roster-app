@@ -12,7 +12,10 @@ const RosterShiftSchema = new mongoose.Schema({
 })
 
 const RosterSchema = new mongoose.Schema({
-    user_id: String, 
+    startDate: {
+        type: Date,
+        required: true
+    }, 
     shifts: [RosterShiftSchema],
 })
 
