@@ -19,6 +19,14 @@ async function createShift(shift) {
     return newShift
 }
 
+async function updateShift(shiftId, start, end) {
+    const updatedShift = await Shift.findByIdAndUpdate(shiftId,
+        {start, end},
+        {new: true}
+      )
+    return updatedShift
+}
+
 async function deleteShift(shiftId) {
     const deletedShift = await Shift.findByIdAndDelete(shiftId)
     return deletedShift
@@ -28,5 +36,6 @@ module.exports = {
     getShifts,
     getShiftById,
     createShift,
+    updateShift,
     deleteShift,
 }

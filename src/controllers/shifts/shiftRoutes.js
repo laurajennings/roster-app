@@ -1,6 +1,6 @@
 const express = require("express")
 const shiftRouter = express.Router()
-const {getShifts, getShiftById, createShift, deleteShift} = require("./shiftControllers")
+const {getShifts, getShiftById, createShift, updateShift, deleteShift} = require("./shiftControllers")
 
 
 
@@ -24,6 +24,20 @@ shiftRouter.post("/", async (request, response) => {
         start: request.body.start,
         end: request.body.end,
     })
+    response.json(shift)
+})
+
+shiftRouter.put("/:shiftId", async (request, response) => {
+    const shift = await updateShift(
+        request.params.shiftId,
+        request.body.start,
+        request.body.end,
+    )
+    if(!shift) {
+        response.json({
+        data: "shfit doesn't exist"
+        }, 404)
+    }
     response.json(shift)
 })
 
