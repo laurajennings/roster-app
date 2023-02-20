@@ -5,10 +5,10 @@ async function getRosters() {
     return rosters
 }
 
-async function getRosterById(rosterId) {
+/* async function getRosterById(rosterId) {
     const roster = await Roster.findById(rosterId)
     return roster
-}
+} */
 
 async function getRosterByDate(startDate) {
     const roster = await Roster.find({startDate: startDate})
@@ -29,6 +29,7 @@ async function getPreviousRosters() {
 
 async function createRoster(roster) {
     const newRoster =  await Roster.create(roster)
+    console.log(newRoster)
     return newRoster
 }
 
@@ -45,23 +46,23 @@ async function deleteRoster(rosterId) {
     return deletedRoster
 }
 
-/*
-async function getRosgetRosterByUserIdWithShiftInfoterById(userId) {
-    const getRosterByUserIdWithShiftInfo = await Roster.findOne({
-        user_id: userId
-    }).populate("products.product")
-    return getRosterByUserIdWithShiftInfo
+
+async function getRosterWithShiftInfo(rosterId) {
+    const roster = await Roster.findOne({
+        roster_id: rosterId
+    }).populate("shifts.shift_id")
+    return roster
 }
-*/ 
+
 
 module.exports = {
     getRosters,
-    getRosterById,
+    //getRosterById,
     getRosterByDate,
     createRoster,
     updateRoster,
     deleteRoster,
     getUpcomingRosters,
     getPreviousRosters,
-    //getRosterByUserIdWithShiftInfo
+    getRosterWithShiftInfo
 }
