@@ -1,14 +1,14 @@
 const express = require("express")
 const rosterRouter = express.Router()
 const {getRosters, 
-    getRosterById,
+    //getRosterById,
     createRoster,
     updateRoster,
     deleteRoster,
     getRosterByDate,
     getUpcomingRosters,
     getPreviousRosters,
-    //getRosterByUserIdWithShiftInfo
+    getRosterWithShiftInfo,
 } = require("./rosterControllers")
 
 
@@ -28,7 +28,7 @@ rosterRouter.get("/previous", async (request, response) => {
     response.json(rosters)
 })
 
-rosterRouter.get("/:rosterId", async (request, response) => {
+/* rosterRouter.get("/:rosterId", async (request, response) => {
     const roster = await getRosterById(request.params.rosterId)
     if(!roster) {
         response.json({
@@ -36,7 +36,7 @@ rosterRouter.get("/:rosterId", async (request, response) => {
         }, 404)
     }
     response.json(roster)
-})
+}) */
 
 rosterRouter.get("/date/:startDate", async (request, response) => {
     const roster = await getRosterByDate(request.params.startDate)
@@ -71,10 +71,10 @@ rosterRouter.delete("/:rosterId", async (request, response) => {
 })
 
 module.exports = rosterRouter
-/*
+
 rosterRouter.get("/:rosterId", async (request, response) => {
     if (request.query.getShiftInfo) {
-        roster = await getRosterByUserIdWiithShiftInfo(request.params.UserId)
+        roster = await getRosterWithShiftInfo(request.params.UserId)
     } else {
         const roster = await getRosterById(request.params.rosterId) 
     }
@@ -86,4 +86,3 @@ rosterRouter.get("/:rosterId", async (request, response) => {
     }
     response.json(roster)
 })
-*/

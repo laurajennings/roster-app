@@ -1,6 +1,6 @@
-const mongoose = require("mongoose")
+/* const mongoose = require("mongoose")
 
-const ShiftSchema = new mongoose.Schema({
+const AvailabilitySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -15,7 +15,6 @@ const ShiftSchema = new mongoose.Schema({
     }
 })
 
-const Shift = mongoose.model("Shift", ShiftSchema)
+const Shift = mongoose.model("Shift", AvailabilitySchema)
 
-module.exports = Shift
-
+module.exports = Shift */
