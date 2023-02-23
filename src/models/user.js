@@ -1,9 +1,13 @@
 const mongoose = require("mongoose")
+const Availability = require("./availability")
 
 const UserSchema = new mongoose.Schema({
-    name: String,
+    firstName: String,
+    lastName: String,
     email: String,
-    password: String,
+    phone: String,
+    dob: Date,
+    availability: [Availability.schema],
 })
 
 const User = mongoose.model("User", UserSchema)

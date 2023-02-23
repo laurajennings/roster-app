@@ -1,10 +1,6 @@
 const mongoose = require("mongoose")
 
 const ShiftSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
     start: {
         type: Date,
         required: true

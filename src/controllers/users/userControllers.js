@@ -7,20 +7,23 @@ async function registerUser(user) {
         return {error: "Email already exsits"}
     }
     const userCreated = await User.create({
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
-        password: user.password
+        phone: user.phone,
+        dob: user.dob,
+        availability: user.availability,
     })
 }
 
-async function loginUser(user) {
+/* async function loginUser(user) {
     const existingUser = await User.findOne({username: user.username})
         if (!existingUser || !existingUser.password) {
             return {error: "username or password is incorrect"}
         }
         return response.json("login successfull")
     
-}
+} */
 
 async function getUsers() {
     const users = await User.find()
@@ -34,7 +37,7 @@ async function deleteUser(userId) {
 
 module.exports = {
     registerUser,
-    loginUser,
+    //loginUser,
     getUsers,
     deleteUser,
 }
