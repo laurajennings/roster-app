@@ -1,17 +1,20 @@
 const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 const ShiftSchema = new mongoose.Schema({
+    employee: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
     start: {
         type: Date,
-        required: true
+        required: true,
     },
     end: {
         type: Date,
-        required: true
+        required: true,
     }
 })
 
-const Shift = mongoose.model("Shift", ShiftSchema)
-
-module.exports = Shift
+module.exports = mongoose.model("Shift", ShiftSchema)
 

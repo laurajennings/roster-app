@@ -1,29 +1,12 @@
 const mongoose = require("mongoose")
-
-const RosterShiftSchema = new mongoose.Schema({
-    shift_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Shift"
-    },
-}, {
-    toJSON: {
-        virtuals: true,
-    }
-})
+const Shift = require("./shift")
 
 const RosterSchema = new mongoose.Schema({
     startDate: {
         type: Date,
         required: true
-    }, 
-    shifts: [RosterShiftSchema],
-})
-
-RosterShiftSchema.virtual("shift", {
-    localField: "shift_id",
-    foreignField: "_id",
-    ref:"Shift",
-    justOne: true,
+    },  
+    shifts: [Shift.schema],
 })
 
 const Roster = mongoose.model("Roster", RosterSchema)
