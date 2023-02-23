@@ -1,5 +1,7 @@
 const { json, response } = require("express")
 const User = require("../../models/user")
+const Shift = require("../../models/shift")
+const Roster = require("../../models/roster")
 
 async function registerUser(user) {
     const existingUser = await User.findOne({email: user.email})
@@ -26,8 +28,29 @@ async function registerUser(user) {
 } */
 
 async function getUsers() {
-    const users = await User.find()
+    const users = await User.find({}, {
+        _id: 1, 
+        firstName: 1, 
+        lastName: 1,
+        email: 1,
+        phone: 1,
+        dob: 1})
     return users
+}
+
+async function getShiftsByUserId(userId) {
+    try {
+        const user = await User.findById(userId)
+        if (!user) {
+            return {error: "User not found"}
+        }
+        const shifts = await Roster.aggregate([
+            {$match: {"shifts.employee": userId}}
+        ])
+    return shifts.map((roster) => roster.shifts)
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 async function deleteUser(userId) {
@@ -39,5 +62,6 @@ module.exports = {
     registerUser,
     //loginUser,
     getUsers,
+    getShiftsByUserId,
     deleteUser,
 }
