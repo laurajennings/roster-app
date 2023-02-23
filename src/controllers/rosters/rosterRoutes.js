@@ -48,6 +48,7 @@ rosterRouter.get("/date/:startDate", async (request, response) => {
 rosterRouter.post("/", async (request, response) => {
     const roster = await createRoster({
         startDate: request.body.startDate,
+        shifts: request.body.shifts
     })
     response.json(roster)
 })

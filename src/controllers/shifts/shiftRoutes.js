@@ -21,6 +21,7 @@ shiftRouter.get("/:shiftId", async (request, response) => {
 
 shiftRouter.post("/", async (request, response) => {
     const shift = await createShift({
+        employee: request.params.employee,
         start: request.body.start,
         end: request.body.end,
     })
@@ -30,6 +31,7 @@ shiftRouter.post("/", async (request, response) => {
 shiftRouter.put("/:shiftId", async (request, response) => {
     const shift = await updateShift(
         request.params.shiftId,
+        request.params.employee,
         request.body.start,
         request.body.end,
     )

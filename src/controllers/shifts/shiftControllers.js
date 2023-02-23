@@ -21,7 +21,7 @@ async function createShift(shift) {
 
 async function updateShift(shiftId, start, end) {
     const updatedShift = await Shift.findByIdAndUpdate(shiftId,
-        {start, end},
+        {employee, start, end},
         {new: true}
       )
     return updatedShift

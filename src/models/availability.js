@@ -1,20 +1,19 @@
-/* const mongoose = require("mongoose")
+const mongoose = require("mongoose")
 
 const AvailabilitySchema = new mongoose.Schema({
-    name: {
+    day: {
         type: String,
-        required: true
+        required: true,
+        enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
     },
     start: {
-        type: Date,
-        required: true
+        type: String,
+        required: true,
     },
     end: {
-        type: Date,
-        required: true
+        type: String,
+        required: true,
     }
-})
+}) 
 
-const Shift = mongoose.model("Shift", AvailabilitySchema)
-
-module.exports = Shift */
+module.exports = mongoose.model("Availability", AvailabilitySchema)
