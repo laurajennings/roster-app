@@ -1,8 +1,41 @@
 const { json, response } = require("express")
 const User = require("../../models/user")
-const Shift = require("../../models/shift")
+//const Shift = require("../../models/shift")
 const Roster = require("../../models/roster")
 
+// Gets all users' names, email, phone and dob
+async function getUsers() {
+    const users = await User.find({}, {
+        _id: 1, 
+        firstName: 1, 
+        lastName: 1,
+        email: 1,
+        phone: 1,
+        dob: 1})
+    return users
+}
+
+// Gets all users' unavailabilities 
+async function getUnavailabilities() {
+    const users = await User.find({}, {
+        _id: 1, 
+        firstName: 1, 
+        lastName: 1,
+        unavailable: 1})
+    return users
+}
+
+// Gets a users shifts by userId
+async function getShifts(userId) {
+    const rosters = await Roster.find({ "shifts.employee": userId}, {
+        _id: 0,
+        startDte: 1,
+        "shifts.$": 1
+    })//.populate("shifts.employee", "firstName lastName")
+    return rosters
+}
+
+// Creates a new user
 async function registerUser(user) {
     const existingUser = await User.findOne({email: user.email})
     if(existingUser) {
@@ -18,6 +51,23 @@ async function registerUser(user) {
     })
 }
 
+// Deletes user with userId
+async function deleteUser(userId) {
+    const deletedUser = await User.findByIdAndDelete(userId)
+    return deletedUser
+}
+
+module.exports = {
+    getUsers,
+    getUnavailabilities,
+    getShifts,
+    registerUser, 
+    deleteUser
+    //loginUser, 
+    //getShiftsByUserId, 
+}
+
+
 /* async function loginUser(user) {
     const existingUser = await User.findOne({username: user.username})
         if (!existingUser || !existingUser.password) {
@@ -27,35 +77,7 @@ async function registerUser(user) {
     
 } */
 
-async function getUsers() {
-    const users = await User.find({}, {
-        _id: 1, 
-        firstName: 1, 
-        lastName: 1,
-        email: 1,
-        phone: 1,
-        dob: 1})
-    return users
-}
-
-async function getUnavailabilities() {
-    const users = await User.find({}, {
-        _id: 1, 
-        firstName: 1, 
-        lastName: 1,
-        unavailable: 1})
-    return users
-}
-
-async function getShifts(userId) {
-    const rosters = await Roster.find({ "shifts.employee": userId}, {
-        _id: 0,
-        startDte: 1,
-        "shifts.$": 1
-    })//.populate("shifts.employee", "firstName lastName")
-    return rosters
-}
-
+/* 
 async function getShiftsByUserId(userId) {
     try {
         const user = await User.findById(userId)
@@ -69,19 +91,4 @@ async function getShiftsByUserId(userId) {
     } catch (err) {
         console.log(err)
     }
-}
-
-async function deleteUser(userId) {
-    const deletedUser = await User.findByIdAndDelete(userId)
-    return deletedUser
-}
-
-module.exports = {
-    registerUser,
-    //loginUser,
-    getUsers,
-    getShifts,
-    getUnavailabilities,
-    getShiftsByUserId,
-    deleteUser,
-}
+} */
