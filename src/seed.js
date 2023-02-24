@@ -22,7 +22,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
                     start: "14:00",
                     end: "18:00"
                 }
-        ]
+            ]
         },
         {
             firstName: "Sally",
@@ -42,26 +42,97 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
                     end: "18:00"
                 }
             ]
-            },
-            {
-                firstName: "Jamie",
-                lastName: "Sampson",
-                email: "jamie@email.com",
-                phone: "0433222333",
-                dob: "2001-11-17",
-                unavailable: [
-                    {
-                        day: "Thursday",
-                        start: "08:00",
-                        end: "12:00"
-                    },
-                    {
-                        day: "Friday",
-                        start: "13:00",
-                        end: "18:00"
-                    }
-                ]
+        },
+        {
+            firstName: "Jamie",
+            lastName: "Sampson",
+            email: "jamie@email.com",
+            phone: "0433222333",
+            dob: "2001-11-17",
+            unavailable: [
+                {
+                    day: "Thursday",
+                    start: "08:00",
+                    end: "12:00"
+                },
+                {
+                    day: "Friday",
+                    start: "13:00",
+                    end: "18:00"
                 }
+            ]
+        },
+        {
+            firstName: "Taylor",
+            lastName: "Jones",
+            email: "taylor@email.com",
+            phone: "0455222333",
+            dob: "2006-09-12",
+            unavailable: [
+                {
+                    day: "Wednesday",
+                    start: "08:00",
+                    end: "13:00"
+                },
+            ]
+        },
+        {
+            firstName: "Tim",
+            lastName: "King",
+            email: "tim@email.com",
+            phone: "0466222333",
+            dob: "1995-02-14",
+            unavailable: [
+                {
+                    day: "Monday",
+                    start: "08:00",
+                    end: "18:00"
+                },
+                {
+                    day: "Thursday",
+                    start: "08:00",
+                    end: "10:00"
+                }
+            ]
+        },
+        {
+            firstName: "Sarah",
+            lastName: "Thomson",
+            email: "sarah@email.com",
+            phone: "0477222333",
+            dob: "2002-03-08",
+            unavailable: [
+                {
+                    day: "Tuesday",
+                    start: "12:00",
+                    end: "18:00"
+                },
+            ]
+        },
+        {
+            firstName: "Daniel",
+            lastName: "Ross",
+            email: "daniel@email.com",
+            phone: "0499222333",
+            dob: "1998-06-18",
+            unavailable: [
+                {
+                    day: "Thursday",
+                    start: "08:00",
+                    end: "12:00"
+                },
+                {
+                    day: "Friday",
+                    start: "13:00",
+                    end: "18:00"
+                },
+                {
+                    day: "Saturday",
+                    start: "08:00",
+                    end: "18:00"
+                }
+            ]
+        },
     ])
     const rosters = await Roster.create([
         {
