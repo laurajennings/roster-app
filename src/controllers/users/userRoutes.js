@@ -1,5 +1,5 @@
 const express = require("express")
-const {registerUser, getAvailabilities,
+const {registerUser, getAvailabilities, getShifts,
     //loginUser, 
 getUsers, getShiftsByUserId, deleteUser} = require("./userControllers")
 
@@ -36,6 +36,12 @@ userRouter.get("/availability", async (request, response) => {
     const availabilities = await getAvailabilities()
     response.json(availabilities)
 })
+
+userRouter.get("/shifts/:userId", async (request, response) => {
+    const shifts = await getShifts(request.params.userId)
+    response.json(shifts)
+})
+
 
 
 userRouter.get("/:userId/shifts", async (request, response) => {

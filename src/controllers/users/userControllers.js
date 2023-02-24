@@ -47,6 +47,15 @@ async function getAvailabilities() {
     return users
 }
 
+async function getShifts(userId) {
+    const rosters = await Roster.find({ "shifts.employee": userId}, {
+        _id: 0,
+        startDte: 1,
+        "shifts.$": 1
+    })//.populate("shifts.employee", "firstName lastName")
+    return rosters
+}
+
 async function getShiftsByUserId(userId) {
     try {
         const user = await User.findById(userId)
@@ -71,6 +80,7 @@ module.exports = {
     registerUser,
     //loginUser,
     getUsers,
+    getShifts,
     getAvailabilities,
     getShiftsByUserId,
     deleteUser,

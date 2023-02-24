@@ -1,7 +1,7 @@
 const express = require("express")
 const rosterRouter = express.Router()
 const {getRosters, 
-    //getRosterById,
+    getRosterById,
     createRoster,
     updateRoster,
     deleteRoster,
@@ -28,7 +28,7 @@ rosterRouter.get("/previous", async (request, response) => {
     response.json(rosters)
 })
 
-/* rosterRouter.get("/:rosterId", async (request, response) => {
+rosterRouter.get("/:rosterId", async (request, response) => {
     const roster = await getRosterById(request.params.rosterId)
     if(!roster) {
         response.json({
@@ -36,10 +36,10 @@ rosterRouter.get("/previous", async (request, response) => {
         }, 404)
     }
     response.json(roster)
-}) */
+}) 
 
-rosterRouter.get("/date/:startDate", async (request, response) => {
-    const roster = await getRosterByDate(request.params.startDate)
+rosterRouter.get("/date/:start", async (request, response) => {
+    const roster = await getRosterByDate(request.params.start)
     response.json(roster)
 })
 
@@ -47,7 +47,8 @@ rosterRouter.get("/date/:startDate", async (request, response) => {
 
 rosterRouter.post("/", async (request, response) => {
     const roster = await createRoster({
-        startDate: request.body.startDate,
+        start: request.body.start,
+        end: request.body.end,
         shifts: request.body.shifts
     })
     response.json(roster)
@@ -56,7 +57,8 @@ rosterRouter.post("/", async (request, response) => {
 rosterRouter.put("/:rosterId", async (request, response) => {
     const roster = await updateRoster(
         request.params.rosterId,
-        request.body.startDate,
+        request.body.start,
+        request.body.end
     )
     if(!roster) {
         response.json({
