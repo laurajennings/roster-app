@@ -11,16 +11,16 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             email: "john@email.com",
             phone: "0411222333",
             dob: "1990-07-27",
-            availability: [
+            unavailable: [
                 {
                     day: "Monday",
                     start: "08:00",
-                    end: "17:00"
+                    end: "18:00"
                 },
                 {
                     day: "Tuesday",
-                    start: "08:00",
-                    end: "17:00"
+                    start: "14:00",
+                    end: "18:00"
                 }
         ]
         },
@@ -30,15 +30,15 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             email: "sally@email.com",
             phone: "0422222333",
             dob: "1999-08-18",
-            availability: [
+            unavailable: [
                 {
-                    day: "Wednesday",
-                    start: "09:00",
-                    end: "20:00"
+                    day: "Saturday",
+                    start: "15:00",
+                    end: "18:00"
                 },
                 {
-                    day: "Thursday",
-                    start: "10:00",
+                    day: "Sunday",
+                    start: "08:00",
                     end: "18:00"
                 }
             ]
@@ -49,16 +49,16 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
                 email: "jamie@email.com",
                 phone: "0433222333",
                 dob: "2001-11-17",
-                availability: [
+                unavailable: [
                     {
-                        day: "Friday",
-                        start: "05:00",
-                        end: "14:00"
+                        day: "Thursday",
+                        start: "08:00",
+                        end: "12:00"
                     },
                     {
-                        day: "Saturday",
-                        start: "07:00",
-                        end: "16:00"
+                        day: "Friday",
+                        start: "13:00",
+                        end: "18:00"
                     }
                 ]
                 }

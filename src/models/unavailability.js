@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const AvailabilitySchema = new mongoose.Schema({
+const UnavailabilitySchema = new mongoose.Schema({
     day: {
         type: String,
         required: true,
@@ -16,4 +16,4 @@ const AvailabilitySchema = new mongoose.Schema({
     }
 }) 
 
-module.exports = mongoose.model("Availability", AvailabilitySchema)
+module.exports = mongoose.model("Unavailability", UnavailabilitySchema)

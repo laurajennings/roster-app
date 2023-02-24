@@ -1,5 +1,5 @@
 const express = require("express")
-const {registerUser, getAvailabilities, getShifts,
+const {registerUser, getUnavailabilities, getShifts,
     //loginUser, 
 getUsers, getShiftsByUserId, deleteUser} = require("./userControllers")
 
@@ -12,7 +12,7 @@ userRouter.post("/register", async (request, response) => {
         email: request.body.email,
         phone: request.body.phone,
         dob: request.body.dob,
-        availability: request.body.availability,
+        unavailable: request.body.unavailable,
     })
     console.log(user)
     return response.json("user registered")
@@ -32,9 +32,9 @@ userRouter.get("/", async (request, response) => {
 })
 
 
-userRouter.get("/availability", async (request, response) => {
-    const availabilities = await getAvailabilities()
-    response.json(availabilities)
+userRouter.get("/unavailabilities", async (request, response) => {
+    const unavailabilities = await getUnavailabilities()
+    response.json(unavailabilities)
 })
 
 userRouter.get("/shifts/:userId", async (request, response) => {

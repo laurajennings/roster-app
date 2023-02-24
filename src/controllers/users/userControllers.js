@@ -14,7 +14,7 @@ async function registerUser(user) {
         email: user.email,
         phone: user.phone,
         dob: user.dob,
-        availability: user.availability,
+        unavailable: user.unavailable,
     })
 }
 
@@ -38,12 +38,12 @@ async function getUsers() {
     return users
 }
 
-async function getAvailabilities() {
+async function getUnavailabilities() {
     const users = await User.find({}, {
         _id: 1, 
         firstName: 1, 
         lastName: 1,
-        availability: 1})
+        unavailable: 1})
     return users
 }
 
@@ -81,7 +81,7 @@ module.exports = {
     //loginUser,
     getUsers,
     getShifts,
-    getAvailabilities,
+    getUnavailabilities,
     getShiftsByUserId,
     deleteUser,
 }

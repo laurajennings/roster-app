@@ -1,6 +1,5 @@
 const mongoose = require("mongoose")
-const Schema = mongoose.Schema
-const Availability = require("./availability")
+const Unavailability = require("./unavailability")
 
 const UserSchema = new mongoose.Schema({
     firstName: String,
@@ -8,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     email: String,
     phone: String,
     dob: Date,
-    availability: [Availability.schema],
+    unavailable: [Unavailability.schema],
 })
 
 const User = mongoose.model("User", UserSchema)
