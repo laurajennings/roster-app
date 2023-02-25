@@ -1,17 +1,5 @@
-const express = require("express")
 const mongoose = require("mongoose")
-const rosterRouter = require("./controllers/rosters/rosterRoutes.js")
-const shiftRouter = require("./controllers/shifts/shiftRoutes")
-const userRouter = require("./controllers/users/userRoutes")
-
-const app = express()
-
-const PORT = 5000
-
-app.use(express.json())
-app.use("/rosters", rosterRouter)
-app.use("/shifts", shiftRouter)
-app.use("/users", userRouter)
+const {app, PORT} = require("./server")
 
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)

@@ -1,5 +1,6 @@
 const express = require("express")
 const {getUsers,
+    //getUserById,
     getUnavailabilities,
     getShifts,
     registerUser, 
@@ -16,6 +17,16 @@ userRouter.get("/", async (request, response) => {
     response.json(users)
 })
 
+/* userRouter.get("/:userId", async (request, response) => {
+    const user = await getUserById(request.params.userId)
+    if(!user) {
+        response.json({
+        data: "User doesn't exist"
+        }, 404)
+    }
+    response.json(user)
+}) */
+
 // Gets all users' unavailabilities
 userRouter.get("/unavailabilities", async (request, response) => {
     const unavailabilities = await getUnavailabilities()
@@ -24,12 +35,17 @@ userRouter.get("/unavailabilities", async (request, response) => {
 
 // Gets a users shifts by userId
 userRouter.get("/shifts/:userId", async (request, response) => {
+/*     const user = await getUserById(request.params.userId)
+    if(!user) {
+        response.json({
+        data: "User doesn't exist"
+        }, 404) */
     const shifts = await getShifts(request.params.userId)
     response.json(shifts)
 })
 
 // Creates a new user
-userRouter.post("/register", async (request, response) => {
+userRouter.post("/", async (request, response) => {
     const user = await registerUser ({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
@@ -38,8 +54,7 @@ userRouter.post("/register", async (request, response) => {
         dob: request.body.dob,
         unavailable: request.body.unavailable,
     })
-    console.log(user)
-    return response.json("user registered")
+    return response.json(user)
 })
 
 // Deletes a user with userId

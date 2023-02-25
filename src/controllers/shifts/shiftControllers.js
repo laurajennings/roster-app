@@ -1,4 +1,4 @@
-const Shift = require("../../models/shift")
+/* const Shift = require("../../models/shift")
 
 async function getShifts() {
     const shifts = await Shift.find()
@@ -38,4 +38,4 @@ module.exports = {
     createShift,
     updateShift,
     deleteShift,
-}
+} */
