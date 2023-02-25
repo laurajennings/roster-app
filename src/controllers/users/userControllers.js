@@ -15,6 +15,15 @@ async function getUsers() {
     return users
 }
 
+async function getUserById(userId) {
+    try {
+    const user = await User.findById(userId)
+    return user
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 // Gets all users' unavailabilities 
 async function getUnavailabilities() {
     const users = await User.find({}, {
@@ -37,10 +46,10 @@ async function getShifts(userId) {
 
 // Creates a new user
 async function registerUser(user) {
-    const existingUser = await User.findOne({email: user.email})
-    if(existingUser) {
+    //const existingUser = await User.findOne({email: user.email})
+/*     if(existingUser) {
         return {error: "Email already exsits"}
-    }
+    } */
     const userCreated = await User.create({
         firstName: user.firstName,
         lastName: user.lastName,
@@ -49,6 +58,7 @@ async function registerUser(user) {
         dob: user.dob,
         unavailable: user.unavailable,
     })
+    return userCreated
 }
 
 // Deletes user with userId
@@ -59,6 +69,7 @@ async function deleteUser(userId) {
 
 module.exports = {
     getUsers,
+    getUserById,
     getUnavailabilities,
     getShifts,
     registerUser, 

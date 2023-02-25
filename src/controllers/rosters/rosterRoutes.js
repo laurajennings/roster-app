@@ -1,8 +1,7 @@
 const express = require("express")
 const rosterRouter = express.Router()
-const {getRosters, 
-    getRosterWithShiftInfo,
-    //getRosterById,
+const {getRosters,
+    getRosterById,
     getRosterByDate,
     getUpcomingRosters,
     getPreviousRosters,
@@ -17,33 +16,6 @@ rosterRouter.get("/", async (request, response) => {
     const rosters = await getRosters()
     response.json(rosters)
 })
-
-// Gets a roster with shifts
-rosterRouter.get("/:rosterId", async (request, response) => {
-    if (request.query.getShiftInfo) {
-        roster = await getRosterWithShiftInfo(request.params.UserId)
-    } else {
-        const roster = await getRosterById(request.params.rosterId) 
-    }
-
-    if(!roster) {
-        response.json({
-        data: "roster doesn't exist"
-        }, 404)
-    }
-    response.json(roster)
-})
-
-// Gets a roster by roster Id
-/* rosterRouter.get("/:rosterId", async (request, response) => {
-    const roster = await getRosterById(request.params.rosterId)
-    if(!roster) {
-        response.json({
-        data: "roster doesn't exist"
-        }, 404)
-    }
-    response.json(roster)
-})  */
 
 // Gets a roster by searching a start date
 rosterRouter.get("/date/:start", async (request, response) => {
@@ -62,6 +34,17 @@ rosterRouter.get("/previous", async (request, response) => {
     const rosters = await getPreviousRosters()
     response.json(rosters)
 })
+
+// Gets a roster by roster Id
+rosterRouter.get("/:rosterId", async (request, response) => {
+    const roster = await getRosterById(request.params.rosterId)
+    if(!roster) {
+        return response.status(404).json({
+            data: "Roster doesn't exist"
+        })
+    }
+    response.json(roster)
+}) 
 
 // Adds a new roster and shifts
 rosterRouter.post("/", async (request, response) => {
