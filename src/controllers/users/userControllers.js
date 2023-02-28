@@ -1,6 +1,8 @@
 const { json, response } = require("express")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const User = require("../../models/user")
-//const Shift = require("../../models/shift")
+const Admin = require("../../models/admin")
 const Roster = require("../../models/roster")
 
 // Gets all users' names, email, phone and dob
@@ -16,12 +18,8 @@ async function getUsers() {
 }
 
 async function getUserById(userId) {
-    try {
     const user = await User.findById(userId)
     return user
-    } catch (err) {
-        console.log(err)
-    }
 }
 
 // Gets all users' unavailabilities 
@@ -46,19 +44,62 @@ async function getShifts(userId) {
 
 // Creates a new user
 async function registerUser(user) {
-    //const existingUser = await User.findOne({email: user.email})
-/*     if(existingUser) {
-        return {error: "Email already exsits"}
-    } */
+    const existingUser = await User.findOne({email: user.email})
+    if(existingUser) {
+        return {error: "Email already registered"}
+    }
+    const hashedPassword = await bcrypt.hash(user.password, 10)
     const userCreated = await User.create({
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        password: hashedPassword,
         phone: user.phone,
         dob: user.dob,
         unavailable: user.unavailable,
     })
-    return userCreated
+    const payload = {
+        id: userCreated._id
+    }
+    const token = jwt.sign(payload, "secret")
+    return token
+}
+
+// Login user
+async function loginUser(user) {
+    const existingUser = await User.findOne({email: user.email})
+        if (!existingUser) {
+            return {error: "Username or password is incorrect"}
+        }
+        const isMatch = await bcrypt.compare(user.password, existingUser.password)
+        if(!isMatch) {
+            return {error: "Username or password is incorrect"}
+        }
+        const payload = {
+            id: existingUser._id
+        }
+        const token = jwt.sign(payload, "secret")
+        return token
+    
+}
+
+// Login admin
+async function loginAdmin(user) {
+    const existingUser = await Admin.findOne({email: user.email})
+        if (!existingUser) {
+            return {error: "Username or password is incorrect"}
+        }
+        const isMatch = await bcrypt.compare(user.password, existingUser.password)
+        if(!isMatch) {
+            return {error: "Username or password is incorrect"}
+        }
+        const payload = {
+            id: existingUser._id,
+            is_admin: true,
+        }
+        const token = jwt.sign(payload, "secret")
+        return token
+    
 }
 
 // Deletes user with userId
@@ -73,33 +114,7 @@ module.exports = {
     getUnavailabilities,
     getShifts,
     registerUser, 
-    deleteUser
-    //loginUser, 
-    //getShiftsByUserId, 
+    deleteUser,
+    loginUser,
+    loginAdmin,
 }
-
-
-/* async function loginUser(user) {
-    const existingUser = await User.findOne({username: user.username})
-        if (!existingUser || !existingUser.password) {
-            return {error: "username or password is incorrect"}
-        }
-        return response.json("login successfull")
-    
-} */
-
-/* 
-async function getShiftsByUserId(userId) {
-    try {
-        const user = await User.findById(userId)
-        if (!user) {
-            return {error: "User not found"}
-        }
-        const shifts = await Roster.aggregate([
-            {$match: {"shifts.employee": userId}}
-        ])
-    return shifts.map((roster) => roster.shifts)
-    } catch (err) {
-        console.log(err)
-    }
-} */
