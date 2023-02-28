@@ -10,6 +10,9 @@ const {getRosters,
     deleteRoster,
 } = require("./rosterControllers")
 
+const auth = require("../..//middlewares/auth")
+const admin = require("../..//middlewares/admin")
+
 
 // Gets all rosters
 rosterRouter.get("/", async (request, response) => {
@@ -47,7 +50,7 @@ rosterRouter.get("/:rosterId", async (request, response) => {
 }) 
 
 // Adds a new roster and shifts
-rosterRouter.post("/", async (request, response) => {
+rosterRouter.post("/", auth, async (request, response) => {
     const roster = await createRoster({
         start: request.body.start,
         end: request.body.end,
@@ -64,15 +67,15 @@ rosterRouter.put("/:rosterId", async (request, response) => {
         request.body.end
     )
     if(!roster) {
-        response.json({
-        data: "roster doesn't exist"
-        }, 404)
+        return response.status(404).json({
+            data: "Roster doesn't exist"
+        })
     }
     response.json(roster)
 })
 
 // Deletes a roster with roster Id
-rosterRouter.delete("/:rosterId", async (request, response) => {
+rosterRouter.delete("/:rosterId", admin, async (request, response) => {
     const roster = await deleteRoster(request.params.rosterId)
     response.json(roster)
 })

@@ -1,14 +1,20 @@
 const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
 const Roster = require('./models/roster')
 const User = require('./models/user')
+const Admin = require('./models/admin')
 
 
 mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.2", async () => {
-    const users = await User.create([
+    await Admin.deleteMany({})
+    await User.deleteMany({})
+    await Roster.deleteMany({})  
+    const admin = await Admin.create([
         {
             firstName: "John",
             lastName: "Doe",
             email: "john@email.com",
+            password: await bcrypt.hash("john1234", 10),
             phone: "0411222333",
             dob: "1990-07-27",
             unavailable: [
@@ -25,9 +31,33 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             ]
         },
         {
+            firstName: "Matt",
+            lastName: "Lee",
+            email: "matt@email.com",
+            password: await bcrypt.hash("matt1234", 10),
+            phone: "0411222333",
+            dob: "1992-04-14",
+            unavailable: [
+                {
+                    day: "Monday",
+                    start: "08:00",
+                    end: "18:00"
+                },
+                {
+                    day: "Tuesday",
+                    start: "14:00",
+                    end: "18:00"
+                }
+            ]
+        } 
+    ])
+    console.log(admin)
+    const users = await User.create([
+        {
             firstName: "Sally",
             lastName: "Jackson",
             email: "sally@email.com",
+            password: await bcrypt.hash("sally1234", 10),
             phone: "0422222333",
             dob: "1999-08-18",
             unavailable: [
@@ -47,6 +77,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             firstName: "Jamie",
             lastName: "Sampson",
             email: "jamie@email.com",
+            password: await bcrypt.hash("jamie1234", 10),
             phone: "0433222333",
             dob: "2001-11-17",
             unavailable: [
@@ -65,7 +96,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
         {
             firstName: "Taylor",
             lastName: "Jones",
-            email: "taylor@email.com",
+            email: await bcrypt.hash("taylor1234", 10),
+            password: "taylor1234",
             phone: "0455222333",
             dob: "2006-09-12",
             unavailable: [
@@ -79,7 +111,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
         {
             firstName: "Tim",
             lastName: "King",
-            email: "tim@email.com",
+            email: await bcrypt.hash("tim1234", 10),
+            password: "tim1234",
             phone: "0466222333",
             dob: "1995-02-14",
             unavailable: [
@@ -99,6 +132,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             firstName: "Sarah",
             lastName: "Thomson",
             email: "sarah@email.com",
+            password: await bcrypt.hash("sarah1234", 10),
             phone: "0477222333",
             dob: "2002-03-08",
             unavailable: [
@@ -113,6 +147,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             firstName: "Daniel",
             lastName: "Ross",
             email: "daniel@email.com",
+            password: await bcrypt.hash("daniel1234", 10),
             phone: "0499222333",
             dob: "1998-06-18",
             unavailable: [
@@ -128,6 +163,26 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
                 },
                 {
                     day: "Saturday",
+                    start: "08:00",
+                    end: "18:00"
+                }
+            ]
+        },
+        {
+            firstName: "Ellie",
+            lastName: "Stafford",
+            email: "ellie@email.com",
+            password: await bcrypt.hash("ellie1234", 10),
+            phone: "0400222333",
+            dob: "1997-01-10",
+            unavailable: [
+                {
+                    day: "Saturday",
+                    start: "15:00",
+                    end: "18:00"
+                },
+                {
+                    day: "Sunday",
                     start: "08:00",
                     end: "18:00"
                 }
