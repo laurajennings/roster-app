@@ -39,9 +39,9 @@ async function createRoster(roster) {
 }
 
 // Updates a roster with rosterId
-async function updateRoster(rosterId, start, end) {
+async function updateRoster(rosterId, start, end, shifts) {
     const updatedRoster = await Roster.findByIdAndUpdate(rosterId,
-        { start, end },
+        { start, end, shifts },
         { new: true }
       )
     return updatedRoster
