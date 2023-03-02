@@ -96,8 +96,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
         {
             firstName: "Taylor",
             lastName: "Jones",
-            email: await bcrypt.hash("taylor1234", 10),
-            password: "taylor1234",
+            email: "taylor@email.com",
+            password: await bcrypt.hash("taylor1234", 10),
             phone: "0455222333",
             dob: "2006-09-12",
             unavailable: [
@@ -111,8 +111,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
         {
             firstName: "Tim",
             lastName: "King",
-            email: await bcrypt.hash("tim1234", 10),
-            password: "tim1234",
+            email: "tim@email.com",
+            password: await bcrypt.hash("tim1234", 10),
             phone: "0466222333",
             dob: "1995-02-14",
             unavailable: [
