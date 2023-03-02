@@ -64,7 +64,8 @@ rosterRouter.put("/:rosterId", async (request, response) => {
     const roster = await updateRoster(
         request.params.rosterId,
         request.body.start,
-        request.body.end
+        request.body.end,
+        request.body.shifts,
     )
     if(!roster) {
         return response.status(404).json({
