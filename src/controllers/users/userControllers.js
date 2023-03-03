@@ -12,20 +12,10 @@ async function getUsers() {
         firstName: 1, 
         lastName: 1,
         email: 1,
+        is_admin: 1,
         phone: 1,
         dob: 1})
     return users
-}
-
-async function getAdmin() {
-    const admins = await Admin.find({}, {
-        _id: 1, 
-        firstName: 1, 
-        lastName: 1,
-        email: 1,
-        phone: 1,
-        dob: 1})
-    return admins
 }
 
 async function getUserById(userId) {
@@ -37,8 +27,6 @@ async function getUserById(userId) {
 async function getUnavailabilities() {
     const users = await User.find({}, {
         _id: 1, 
-        firstName: 1, 
-        lastName: 1,
         unavailable: 1})
     return users
 }
@@ -65,12 +53,14 @@ async function registerUser(user) {
         lastName: user.lastName,
         email: user.email,
         password: hashedPassword,
+        is_admin: user.is_admin,
         phone: user.phone,
         dob: user.dob,
         unavailable: user.unavailable,
     })
     const payload = {
-        id: userCreated._id
+        id: userCreated._id,
+        is_admin: user.is_admin
     }
     const token = jwt.sign(payload, "secret")
     return token
@@ -87,26 +77,8 @@ async function loginUser(user) {
             return {error: "Username or password is incorrect"}
         }
         const payload = {
-            id: existingUser._id
-        }
-        const token = jwt.sign(payload, "secret")
-        return token
-    
-}
-
-// Login admin
-async function loginAdmin(user) {
-    const existingUser = await Admin.findOne({email: user.email})
-        if (!existingUser) {
-            return {error: "Username or password is incorrect"}
-        }
-        const isMatch = await bcrypt.compare(user.password, existingUser.password)
-        if(!isMatch) {
-            return {error: "Username or password is incorrect"}
-        }
-        const payload = {
             id: existingUser._id,
-            is_admin: true,
+            is_admin: existingUser.is_admin
         }
         const token = jwt.sign(payload, "secret")
         return token
@@ -127,6 +99,4 @@ module.exports = {
     registerUser, 
     deleteUser,
     loginUser,
-    loginAdmin,
-    getAdmin
 }
