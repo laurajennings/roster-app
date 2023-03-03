@@ -9,12 +9,13 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
     await Admin.deleteMany({})
     await User.deleteMany({})
     await Roster.deleteMany({})  
-    const admin = await Admin.create([
+    const users = await User.create([
         {
             firstName: "John",
             lastName: "Doe",
             email: "john@email.com",
             password: await bcrypt.hash("john1234", 10),
+            is_admin: true,
             phone: "0411222333",
             dob: "1990-07-27",
             unavailable: [
@@ -35,6 +36,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "Lee",
             email: "matt@email.com",
             password: await bcrypt.hash("matt1234", 10),
+            is_admin: true,
             phone: "0411222333",
             dob: "1992-04-14",
             unavailable: [
@@ -49,15 +51,13 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
                     end: "18:00"
                 }
             ]
-        } 
-    ])
-    console.log(admin)
-    const users = await User.create([
+        },
         {
             firstName: "Sally",
             lastName: "Jackson",
             email: "sally@email.com",
             password: await bcrypt.hash("sally1234", 10),
+            is_admin: false,
             phone: "0422222333",
             dob: "1999-08-18",
             unavailable: [
@@ -78,6 +78,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "Sampson",
             email: "jamie@email.com",
             password: await bcrypt.hash("jamie1234", 10),
+            is_admin: false,
             phone: "0433222333",
             dob: "2001-11-17",
             unavailable: [
@@ -98,6 +99,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "Jones",
             email: "taylor@email.com",
             password: await bcrypt.hash("taylor1234", 10),
+            is_admin: false,
             phone: "0455222333",
             dob: "2006-09-12",
             unavailable: [
@@ -113,6 +115,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "King",
             email: "tim@email.com",
             password: await bcrypt.hash("tim1234", 10),
+            is_admin: false,
             phone: "0466222333",
             dob: "1995-02-14",
             unavailable: [
@@ -133,6 +136,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "Thomson",
             email: "sarah@email.com",
             password: await bcrypt.hash("sarah1234", 10),
+            is_admin: false,
             phone: "0477222333",
             dob: "2002-03-08",
             unavailable: [
@@ -148,6 +152,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "Ross",
             email: "daniel@email.com",
             password: await bcrypt.hash("daniel1234", 10),
+            is_admin: false,
             phone: "0499222333",
             dob: "1998-06-18",
             unavailable: [
@@ -173,6 +178,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelecti
             lastName: "Stafford",
             email: "ellie@email.com",
             password: await bcrypt.hash("ellie1234", 10),
+            is_admin: false,
             phone: "0400222333",
             dob: "1997-01-10",
             unavailable: [

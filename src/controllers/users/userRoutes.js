@@ -6,8 +6,6 @@ const {getUsers,
     registerUser, 
     deleteUser,
     loginUser,
-    loginAdmin, 
-    getAdmin
 } = require("./userControllers")
 const userRouter = express.Router()
 
@@ -19,12 +17,6 @@ const use = require("../../middlewares/use")
 userRouter.get("/", auth, use(async (request, response) => {
     const users = await getUsers()
     response.json(users)
-}))
-
-// Gets all users' names, email, phone and dob
-userRouter.get("/admin", admin, use(async (request, response) => {
-    const admins = await getAdmin()
-    response.json(admins)
 }))
 
 // Gets all users' unavailabilities
@@ -44,12 +36,13 @@ userRouter.get("/:userId", admin, use(async (request, response) => {
 }))
 
 // Creates a new user
-userRouter.post("/", admin, use(async (request, response) => {
+userRouter.post("/", use(async (request, response) => {
     const token = await registerUser ({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
         email: request.body.email,
         password: request.body.password,
+        is_admin: request.body.is_admin,
         phone: request.body.phone,
         dob: request.body.dob,
         unavailable: request.body.unavailable,
@@ -65,15 +58,6 @@ userRouter.post("/login", use(async (request, response) => {
     const token = await loginUser({
         email: request.body.email,
         password: request.body.password 
-    })
-    return response.json(token)
-}))
-
-// Login admin
-userRouter.post("/login/admin", use(async (request, response) => {
-    const token = await loginAdmin({
-        email: request.body.email,
-        password: request.body.password
     })
     return response.json(token)
 }))

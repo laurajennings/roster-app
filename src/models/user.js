@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
     lastName: String,
     email: String,
     password: String,
+    is_admin: Boolean,
     phone: String,
     dob: Date,
     unavailable: [Unavailability.schema],
