@@ -17,6 +17,17 @@ async function getUsers() {
     return users
 }
 
+async function getAdmin() {
+    const admins = await Admin.find({}, {
+        _id: 1, 
+        firstName: 1, 
+        lastName: 1,
+        email: 1,
+        phone: 1,
+        dob: 1})
+    return admins
+}
+
 async function getUserById(userId) {
     const user = await User.findById(userId)
     return user
@@ -117,4 +128,5 @@ module.exports = {
     deleteUser,
     loginUser,
     loginAdmin,
+    getAdmin
 }
