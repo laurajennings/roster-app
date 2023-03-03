@@ -1,4 +1,6 @@
 const Roster = require("../../models/roster")
+const Shift = require("../../models/shift")
+const User = require("../../models/user")
 
 // Gets all rosters
 async function getRosters() {
@@ -12,7 +14,38 @@ async function getRosterById(rosterId) {
     return roster
 }
 
-// Gets a roster by searching a start date
+// Adds a new roster and shifts
+async function createRoster(roster) {
+    const newRoster =  await Roster.create(roster)
+    return newRoster
+}
+
+// Updates a roster with rosterId
+async function updateRoster(rosterId, start, end, shifts) {
+    const updatedRoster = await Roster.findByIdAndUpdate(rosterId,
+        {start, end, shifts},
+        {new: true}
+    )
+    return updatedRoster
+}
+
+// Deletes a roster with rosterId
+async function deleteRoster(rosterId) {
+    const deletedRoster = await Roster.findByIdAndDelete(rosterId)
+    return deletedRoster
+}
+
+
+module.exports = {
+    getRosters,
+    getRosterById,
+    createRoster,
+    updateRoster,
+    deleteRoster,
+}
+
+
+/* // Gets a roster by searching a start date
 async function getRosterByDate(start) {
     const roster = await Roster.find({start: start})
     return roster
@@ -30,37 +63,4 @@ async function getPreviousRosters() {
     const currentDate = new Date()
     const rosters = await Roster.find({ end: { $lt: currentDate } })
     return rosters
-}
-
-// Adds a new roster and shifts
-async function createRoster(roster) {
-    const newRoster =  await Roster.create(roster)
-    return newRoster
-}
-
-// Updates a roster with rosterId
-async function updateRoster(rosterId, start, end, shifts) {
-    const updatedRoster = await Roster.findByIdAndUpdate(rosterId,
-        { start, end, shifts },
-        { new: true }
-      )
-    return updatedRoster
-}
-
-// Deletes a roster with rosterId
-async function deleteRoster(rosterId) {
-    const deletedRoster = await Roster.findByIdAndDelete(rosterId)
-    return deletedRoster
-}
-
-
-module.exports = {
-    getRosters,
-    getRosterById,
-    getRosterByDate,
-    getUpcomingRosters,
-    getPreviousRosters,
-    createRoster,
-    updateRoster,
-    deleteRoster,
-}
+} */
