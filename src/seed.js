@@ -2,11 +2,8 @@ const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const Roster = require('./models/roster')
 const User = require('./models/user')
-const Admin = require('./models/admin')
-
 
 mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.2", async () => {
-    await Admin.deleteMany({})
     await User.deleteMany({})
     await Roster.deleteMany({})  
     const users = await User.create([

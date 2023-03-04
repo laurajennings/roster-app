@@ -2,7 +2,7 @@ const express = require("express")
 const {getUsers,
     getUserById,
     getUnavailabilities,
-    getShifts,
+    //getShifts,
     registerUser, 
     deleteUser,
     loginUser,
@@ -14,7 +14,7 @@ const admin = require("../../middlewares/admin")
 const use = require("../../middlewares/use")
 
 // Gets all users' names, email, phone and dob
-userRouter.get("/", auth, use(async (request, response) => {
+userRouter.get("/", use(async (request, response) => {
     const users = await getUsers()
     response.json(users)
 }))
