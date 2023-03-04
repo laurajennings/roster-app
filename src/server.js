@@ -21,6 +21,12 @@ app.use(function(error, request, response, next) {
     response.status(500).send({message: "Something went wrong"})
 })
 
+app.get("/", (request, response) => {
+    response.json({
+        data: "sent"
+    })
+})
+
 module.exports = {
     app,
     PORT
