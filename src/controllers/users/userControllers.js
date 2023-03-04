@@ -2,7 +2,6 @@ const { json, response } = require("express")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../../models/user")
-const Admin = require("../../models/admin")
 const Roster = require("../../models/roster")
 
 // Gets all users' names, email, phone and dob
@@ -62,7 +61,7 @@ async function registerUser(user) {
         id: userCreated._id,
         is_admin: user.is_admin
     }
-    const token = jwt.sign(payload, "secret")
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
     return token
 }
 
@@ -80,7 +79,7 @@ async function loginUser(user) {
             id: existingUser._id,
             is_admin: existingUser.is_admin
         }
-        const token = jwt.sign(payload, "secret")
+        const token = jwt.sign(payload, process.env.JWT_SECRET)
         return token
     
 }
