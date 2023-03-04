@@ -9,6 +9,13 @@ const app = express()
 
 app.use(helmet())
 
+const corsOption = {
+    origin: ["http://localhost:3000"],
+    optionSuccessStatus: 200
+}
+
+app.use(cors(corsOption))
+
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
