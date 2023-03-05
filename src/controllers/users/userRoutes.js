@@ -25,16 +25,6 @@ userRouter.get("/unavailabilities", admin, use(async (request, response) => {
     response.json(unavailabilities)
 }))
 
-userRouter.get("/:userId", admin, use(async (request, response) => {
-    const user = await getUserById(request.params.userId)
-    if(!user) {
-        return response.status(404).json({
-            data: "User doesn't exist"
-        })
-    }
-    response.json(user)
-}))
-
 // Creates a new user
 userRouter.post("/", use(async (request, response) => {
     const token = await registerUser ({
@@ -60,6 +50,16 @@ userRouter.post("/login", use(async (request, response) => {
         password: request.body.password 
     })
     return response.json(token)
+}))
+
+userRouter.get("/:userId", admin, use(async (request, response) => {
+    const user = await getUserById(request.params.userId)
+    if(!user) {
+        return response.status(404).json({
+            data: "User doesn't exist"
+        })
+    }
+    response.json(user)
 }))
 
 // Updates a user with user Id
