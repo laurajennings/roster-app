@@ -1,9 +1,10 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
+require("dotenv").config()
 const Roster = require('./models/roster')
 const User = require('./models/user')
 
-mongoose.connect("mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.2", async () => {
+mongoose.connect(process.env.MONGO_URI, async () => {
     await User.deleteMany({})
     await Roster.deleteMany({})  
     const users = await User.create([
