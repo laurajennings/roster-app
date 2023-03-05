@@ -30,7 +30,7 @@ userRouter.get("/unavailabilities", admin, use(async (request, response) => {
 
 // Creates a new user
 userRouter.post("/", use(async (request, response) => {
-    const token = await registerUser ({
+    const userCreated = await registerUser ({
         firstName: request.body.firstName,
         lastName: request.body.lastName,
         email: request.body.email,
@@ -40,10 +40,7 @@ userRouter.post("/", use(async (request, response) => {
         dob: request.body.dob,
         unavailable: request.body.unavailable,
     })
-    if(token.error) {
-        return response.status(400).json({data: token.error})
-    }
-    return response.json(token)
+    return response.json(userCreated)
 }))
 
 // Login user

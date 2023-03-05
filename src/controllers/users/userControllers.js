@@ -47,12 +47,7 @@ async function registerUser(user) {
         dob: user.dob,
         unavailable: user.unavailable,
     })
-    const payload = {
-        id: userCreated._id,
-        is_admin: user.is_admin
-    }
-    const token = jwt.sign(payload, process.env.JWT_SECRET)
-    return token
+    return userCreated
 }
 
 // Login user
