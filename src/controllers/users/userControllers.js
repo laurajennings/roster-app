@@ -75,9 +75,9 @@ async function loginUser(user) {
 }
 
 // Updates a user with userId
-async function updateUser(userId, firstName, lastName, email, password, is_admin, phone, dob, availability) {
+async function updateUser(userId, firstName, lastName, email, password, is_admin, phone, dob, unavailable) {
     const updatedUser = await User.findByIdAndUpdate(userId,
-        {firstName, lastName, email, password, is_admin, phone, dob, availability},
+        {firstName, lastName, email, password, is_admin, phone, dob, unavailable},
         {new: true}
     )
     return updatedUser
