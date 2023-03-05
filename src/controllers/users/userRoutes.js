@@ -85,6 +85,27 @@ userRouter.put("/:userId", auth, use(async (request, response) => {
     response.json(user)
 }))
 
+// Updates a unavailability with user Id
+userRouter.patch("/unavailability/:userId", auth, use(async (request, response) => {
+    const user = await updateUser(
+        request.params.userId,
+        request.body.firstName,
+        request.body.lastName,
+        request.body.email,
+        request.body.password,
+        request.body.is_admin,
+        request.body.phone,
+        request.body.dob,
+        request.body.unavailable,
+    )
+    if(!user) {
+        return response.status(404).json({
+            data: "User doesn't exist"
+        })
+    }
+    response.json(user)
+}))
+
 // Deletes a user with userId
 userRouter.delete("/:userId", admin, use(async (request, response) => {
     const user = await deleteUser(request.params.userId)
