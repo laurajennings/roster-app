@@ -83,6 +83,15 @@ async function updateUser(userId, firstName, lastName, email, password, is_admin
     return updatedUser
 }
 
+// Deletes an unavailability with userId and unavailableId
+async function deleteUnabailability(userId, unavailableId) {
+    const filter = {_id: userId}
+    const update = {$pull: {unavailable: {_id: unavailableId}}}
+    const options = {new: true}
+    const updatedUser = await User.findOneAndUpdate(filter, update, options)
+    return updatedUser
+}
+
 // Deletes user with userId
 async function deleteUser(userId) {
     const deletedUser = await User.findByIdAndDelete(userId)
@@ -96,5 +105,6 @@ module.exports = {
     registerUser, 
     loginUser,
     updateUser,
+    deleteUnabailability,
     deleteUser,
 }
