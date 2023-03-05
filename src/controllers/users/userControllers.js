@@ -16,7 +16,7 @@ async function getUsers() {
         dob: 1})
     return users
 }
-
+ 
 async function getUserById(userId) {
     const user = await User.findById(userId)
     return user
@@ -28,16 +28,6 @@ async function getUnavailabilities() {
         _id: 1, 
         unavailable: 1})
     return users
-}
-
-// Gets a users shifts by userId
-async function getShifts(userId) {
-    const rosters = await Roster.find({ "shifts.employee": userId}, {
-        _id: 0,
-        startDte: 1,
-        "shifts.$": 1
-    })//.populate("shifts.employee", "firstName lastName")
-    return rosters
 }
 
 // Creates a new user
@@ -84,6 +74,15 @@ async function loginUser(user) {
     
 }
 
+// Updates a user with userId
+async function updateUser(userId, firstName, lastName, email, password, is_admin, phone, dob, availability) {
+    const updatedUser = await User.findByIdAndUpdate(userId,
+        {firstName, lastName, email, password, is_admin, phone, dob, availability},
+        {new: true}
+    )
+    return updatedUser
+}
+
 // Deletes user with userId
 async function deleteUser(userId) {
     const deletedUser = await User.findByIdAndDelete(userId)
@@ -94,8 +93,8 @@ module.exports = {
     getUsers,
     getUserById,
     getUnavailabilities,
-    getShifts,
     registerUser, 
-    deleteUser,
     loginUser,
+    updateUser,
+    deleteUser,
 }
