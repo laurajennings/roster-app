@@ -2,10 +2,10 @@ const express = require("express")
 const {getUsers,
     getUserById,
     getUnavailabilities,
-    //getShifts,
-    registerUser, 
-    deleteUser,
+    registerUser,
     loginUser,
+    updateUser, 
+    deleteUser,
 } = require("./userControllers")
 const userRouter = express.Router()
 
@@ -62,6 +62,27 @@ userRouter.post("/login", use(async (request, response) => {
     return response.json(token)
 }))
 
+// Updates a user with user Id
+userRouter.put("/:userId", auth, use(async (request, response) => {
+    const user = await updateUser(
+        request.params.userId,
+        request.body.firstName,
+        request.body.lastName,
+        request.body.email,
+        request.body.password,
+        request.body.is_admin,
+        request.body.phone,
+        request.body.dob,
+        request.body.unavailable,
+    )
+    if(!user) {
+        return response.status(404).json({
+            data: "User doesn't exist"
+        })
+    }
+    response.json(user)
+}))
+
 // Deletes a user with userId
 userRouter.delete("/:userId", admin, use(async (request, response) => {
     const user = await deleteUser(request.params.userId)
@@ -69,16 +90,3 @@ userRouter.delete("/:userId", admin, use(async (request, response) => {
 }))
 
 module.exports = userRouter
-
-/* 
-// Gets a users shifts by userId
-userRouter.get("/shifts/:userId", use(async (request, response) => {
-     const user = await getUserById(request.params.userId)
-        if(!user) {
-            response.json({
-            data: "User doesn't exist"
-            }, 404)
-        const shifts = await getShifts(request.params.userId)
-        response.json(shifts)
-    })) 
-    */
