@@ -7,6 +7,7 @@ const {getUsers,
     registerUser,
     loginUser,
     updateUser, 
+    deleteUnabailability,
     deleteUser,
 } = require("./userControllers")
 const userRouter = express.Router()
@@ -106,10 +107,31 @@ userRouter.patch("/unavailability/:userId", auth, use(async (request, response) 
     response.json(user)
 }))
 
+// Deletes an unavailability with userId and unavailableId
+userRouter.delete("/unavailability/:userId/:unavailableId", admin, use(async (request, response) => {
+    const user = await deleteUnabailability(
+        request.params.userId,
+        request.params.unavailableId
+    )
+    if(!user) {
+        return response.status(404).json({
+            data: "User doesn't exist"
+        })
+    }
+    response.json(user)
+}))
+
 // Deletes a user with userId
 userRouter.delete("/:userId", admin, use(async (request, response) => {
     const user = await deleteUser(request.params.userId)
+    if(!user) {
+        return response.status(404).json({
+            data: "User doesn't exist"
+        })
+    }
     response.json(user)
 }))
+
+
 
 module.exports = userRouter
