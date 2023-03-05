@@ -10,7 +10,7 @@ const app = express()
 app.use(helmet())
 
 const corsOption = {
-    origin: ["http://localhost:3000", "https://main--inspiring-gelato-aae7ec.netlify.app/"],
+    origin: ["http://localhost:3000", "https://main--inspiring-gelato-aae7ec.netlify.app"],
     optionSuccessStatus: 200
 }
 
