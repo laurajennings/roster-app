@@ -1,4 +1,6 @@
 const express = require("express")
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 const {getUsers,
     getUserById,
     getUnavailabilities,
@@ -52,7 +54,7 @@ userRouter.post("/login", use(async (request, response) => {
     return response.json(token)
 }))
 
-userRouter.get("/:userId", admin, use(async (request, response) => {
+userRouter.get("/:userId", use(async (request, response) => {
     const user = await getUserById(request.params.userId)
     if(!user) {
         return response.status(404).json({
