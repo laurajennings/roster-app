@@ -24,8 +24,8 @@ app.use("/rosters", rosterRouter)
 app.use("/users", userRouter)
 
 app.use(function(error, request, response, next) {
-    response.json(error)
-    response.status(500).send({message: "Something went wrong"})
+    console.error(error)
+    return response.status(500).send({message: "Something went wrong"})
 })
 
 app.get("/", (request, response) => {
